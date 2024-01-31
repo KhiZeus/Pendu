@@ -1,3 +1,5 @@
+import random
+
 """Le script qui suit permet de réaliser le jeu du pendu ;
     l'utilisateur du jeu joue contre l'ordinateur qui choisit un mot dans un fichier fourni
     Version: 1.1 :  structure simple de devinette d'une lettre dans un mot fixé
@@ -8,7 +10,6 @@
 Definitions des fonctions
  ________________________________________________________
 """
-
 
 def lister_fichier(nom_du_fichier):
     """"Fonction :Importation de fichier en list"""
@@ -27,17 +28,46 @@ def lister_fichier(nom_du_fichier):
     return liste_mot
 
 
-"""def choisir_mot(liste_mot):
-    """"Fonction qui choisis de manière random uneleme"""
-""" Argument : nom du fichier"""
-"""""""retour   : list des mots"""
+# fonction pour simplifier les text
+def simplifier(texte):
+    """Remplace les caractère spéciaux dans un texte par des caractères simples:
+  enlève les accents, la cédille, ....
+  Argument: Texte à simplifier
+  return le même text en simple
+  """
+
+    correspondance = {
+        "àáâãäå": "a",
+        "æ": "ae",
+        "èéêë": "e",
+        "ìíîï": "i",
+        "ñ": "n",
+        "òóôõöø": "o",
+        "œ": "oe",
+        "ùúûü": "u",
+        "ýÿ": "y",
+        "ç": "c"
+    }
+
+    texte_simple = ""
+    for caracter in texte:
+        for complexe_texte, simple in correspondance.items():
+            if caracter in complexe_texte:
+                texte_simple += simple
+                break
+        else:
+            texte_simple += caracter
+
+    return texte_simple
+
+
 """____________________________________________________
 
 Main
  ________________________________________________________
 
 """
-import random
+
 # Declaration des constantes
 liste_mots = []
 
@@ -63,11 +93,11 @@ while not lecture_nom:
 list_fichier = lister_fichier(nom_fichier)
 
 # choix du mot
-MotObjectif = random.choice(list_fichier)
-print(MotObjectif)
+MotObjectif = simplifier(random.choice(list_fichier))
+
 
 while NombreDeChance > 0:  # "_" in MotObtenu and
-    #afficher mot à deviner actualisé
+    # afficher mot à deviner actualisé
     LettrePropose = input("Proposez une lettre: ")
     if LettrePropose in MotObjectif:
         print("BRAVO !! Vous avez trouver une lettre du mot ")
