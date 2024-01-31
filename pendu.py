@@ -12,7 +12,7 @@ Definitions des fonctions
 """
 
 
-def lister_fichier(nom_du_fichier):
+def lister_fichier(nom_du_fichier="mots_pendu.txt"):
     """Fonction :Importation de fichier en list
      Argument : nom du fichier"""
     """""""retour   : list des mots"""
