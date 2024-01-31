@@ -44,6 +44,7 @@ def deviner_mot(liste_lettre, mot):
 
     return mot_incomplet
 
+
 """____________________________________________________
 
 Main
@@ -53,67 +54,68 @@ Main
 liste_mots = []
 
 # choix du fichier avec les mots à deviner
+changement_fichier = "o"
+while changement_fichier == "o":
 
-lecture_nom = False
-essaie_lecture = 0
-while not lecture_nom:
-    # l'utilisateur dit s'il veux charger son propre fichier
-    decision_ajout_fichier = input("Voulez-vous utilisez votre propre fichier? o = oui   n = non :")
-    if decision_ajout_fichier == 'o':
-        nom_fichier = input("Entrez le nom de fichier avec son extension : ")
-        lecture_nom = True
-    elif decision_ajout_fichier == 'n' or essaie_lecture  >= 2:
-        print("""Utilisons le fichier "mots_pendu.txt""")
-        nom_fichier = "mots_pendu.txt"
-        lecture_nom = True
-    # en cas de frappe differente de o et n l'utilisateur doit reprendre
-    else:
-        print("""merci d""'"entrez 'o' pour oui et 'n' pour non""")
-        essaie_lecture += 1
-
-# Conversion du fichier lu enliste de mot
-liste_mots = lister_fichier(nom_fichier)
-
-# POINT de reprise d'une nouvelle séquence de jeu reprise
-reprise = "o"
-while reprise =="o":
-
-    # definition du mot a deviner
-    MotObjectif = random.choice(liste_mots)
-
-    # Création du mot vide
-    MotObtenu = ""
-    for i, car in enumerate(MotObjectif):
-        MotObtenu += " _ "
-
-    NombreDeChance = 6
-    lettre_trouve = []
-    lettre_essaies = []
-
-
-    while NombreDeChance > 0 and "_" in MotObtenu:
-        # afficher mot à deviner actualisé
-        print(f"\nLe mot à deviner est : ", MotObtenu, "encore ", NombreDeChance, " chances ; déja essayé", lettre_essaies,
-              "\n ")
-        LettrePropose = input("Proposez une lettre: ")
-        if LettrePropose not in lettre_essaies:
-            lettre_essaies.append(LettrePropose)
-            if LettrePropose in MotObjectif:
-                lettre_trouve.append(LettrePropose)
-                MotObtenu = deviner_mot(lettre_trouve, MotObjectif)
-                print("BRAVO !! Vous avez trouver une lettre du mot ")
-            else:
-                NombreDeChance -= 1
-                print(f"OOOPS!! Cette lettre ne se trouve pas dans le mot recherché \n \t \t Essaies restants :",
-                      NombreDeChance, "")
+    lecture_nom = False
+    essaie_lecture = 0
+    while not lecture_nom:
+        # l'utilisateur dit s'il veux charger son propre fichier
+        decision_ajout_fichier = input("Voulez-vous utilisez votre propre fichier? o = oui   n = non :")
+        if decision_ajout_fichier == 'o':
+            nom_fichier = input("Entrez le nom de fichier avec son extension : ")
+            lecture_nom = True
+        elif decision_ajout_fichier == 'n' or essaie_lecture >= 2:
+            print("""Utilisons le fichier "mots_pendu.txt""")
+            nom_fichier = "mots_pendu.txt"
+            lecture_nom = True
+        # en cas de frappe differente de o et n l'utilisateur doit reprendre
         else:
-            print("la lettre a déjà été proposée")
+            print("""merci d""'"entrez 'o' pour oui et 'n' pour non""")
+            essaie_lecture += 1
 
+    # Conversion du fichier lu enliste de mot
+    liste_mots = lister_fichier(nom_fichier)
 
-    if MotObtenu == MotObjectif:
-        print(f" LA PARTIE EST GAGNÉE :) Vous évitez la potence \n Le mot est bien :\t ", MotObtenu)
-    else:
-        print(f"VOUS ETES PENDU !! le mot à trouver étais :\t", MotObjectif)
+    # POINT de reprise d'une nouvelle séquence de jeu reprise
+    reprise = "o"
+    while reprise == "o":
 
-    reprise = input("Voulez vous rejouer ? o = oui   n = non :")
+        # definition du mot a deviner
+        MotObjectif = random.choice(liste_mots)
 
+        # Création du mot vide
+        MotObtenu = ""
+        for i, car in enumerate(MotObjectif):
+            MotObtenu += " _ "
+
+        NombreDeChance = 6
+        lettre_trouve = []
+        lettre_essaies = []
+
+        while NombreDeChance > 0 and "_" in MotObtenu:
+            # afficher mot à deviner actualisé
+            print(f"\nLe mot à deviner est : ", MotObtenu, "encore ", NombreDeChance, " chances ; déja essayé",
+                  lettre_essaies,
+                  "\n ")
+            LettrePropose = input("Proposez une lettre: ")
+            if LettrePropose not in lettre_essaies:
+                lettre_essaies.append(LettrePropose)
+                if LettrePropose in MotObjectif:
+                    lettre_trouve.append(LettrePropose)
+                    MotObtenu = deviner_mot(lettre_trouve, MotObjectif)
+                    print("BRAVO !! Vous avez trouver une lettre du mot ")
+                else:
+                    NombreDeChance -= 1
+                    print(f"OOOPS!! Cette lettre ne se trouve pas dans le mot recherché \n \t \t Essaies restants :",
+                          NombreDeChance, "")
+            else:
+                print("la lettre a déjà été proposée")
+
+        if MotObtenu == MotObjectif:
+            print(f" LA PARTIE EST GAGNÉE :) Vous évitez la potence \n Le mot est bien :\t ", MotObtenu)
+        else:
+            print(f"VOUS ETES PENDU !! le mot à trouver étais :\t", MotObjectif)
+
+        reprise = input("Voulez vous rejouer ? o = oui   n = non :")
+        changement_fichier = input("Voulez vous changer de fichier ? o = oui   n = non :")
