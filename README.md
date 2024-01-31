@@ -1,5 +1,5 @@
 # Le jeu du Pendu
-  ![PENDU](E:\ETS_DATA\MGA802\MGA802\jeudupendu.jpg "eviter d'etre pendu")
+  ![PENDU](\jeudupendu.jpg "eviter d'etre pendu")
 
 Le présent script permet de réaliser le jeu du pendu.
 L'utilisateur au début du jeu a la possibilité de proposer son propre fichier de mot.
@@ -25,4 +25,4 @@ les fonctions implémenter dans le script sont les suivantes:
   retour le même texte en simple
   """
 De manière générale le script fonctione bien:)
-* BON JEUet éviter la potence
+* BON JEU et éviter la potence!!!
