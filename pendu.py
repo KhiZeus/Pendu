@@ -1,3 +1,5 @@
+import random
+
 """Le script qui suit permet de réaliser le jeu du pendu ;
     l'utilisateur du jeu joue contre l'ordinateur qui choisit un mot dans un fichier fourni
     Version: 1.1 :  structure simple de devinette d'une lettre dans un mot fixé
@@ -10,7 +12,6 @@ import random
 Definitions des fonctions
  ________________________________________________________
 """
-
 
 def lister_fichier(nom_du_fichier):
     """Fonction :Importation de fichier en list
@@ -30,6 +31,40 @@ def lister_fichier(nom_du_fichier):
     return liste_mot
 
 
+
+# fonction pour simplifier les text
+def simplifier(texte):
+    """Remplace les caractère spéciaux dans un texte par des caractères simples:
+  enlève les accents, la cédille, ....
+  Argument: Texte à simplifier
+  return le même text en simple
+  """
+
+    correspondance = {
+        "àáâãäå": "a",
+        "æ": "ae",
+        "èéêë": "e",
+        "ìíîï": "i",
+        "ñ": "n",
+        "òóôõöø": "o",
+        "œ": "oe",
+        "ùúûü": "u",
+        "ýÿ": "y",
+        "ç": "c"
+    }
+
+    texte_simple = ""
+    for caracter in texte:
+        for complexe_texte, simple in correspondance.items():
+            if caracter in complexe_texte:
+                texte_simple += simple
+                break
+        else:
+            texte_simple += caracter
+
+    return texte_simple
+
+
 def deviner_mot(liste_lettre, mot):
     """remplace les lettres du mot manquants dans la liste de lettre par "_"
     Argument:
@@ -43,6 +78,7 @@ def deviner_mot(liste_lettre, mot):
             mot_incomplet += " _"
 
     return mot_incomplet
+
 
 """____________________________________________________
 
@@ -78,9 +114,7 @@ liste_mots = lister_fichier(nom_fichier)
 reprise = "o"
 while reprise =="o":
 
-    # definition du mot a deviner
-    MotObjectif = random.choice(liste_mots)
-
+ 
     # Création du mot vide
     MotObtenu = ""
     for i, car in enumerate(MotObjectif):
@@ -88,7 +122,10 @@ while reprise =="o":
 
     NombreDeChance = 6
     lettre_trouve = []
-    lettre_essaies = []
+
+# choix du mot
+MotObjectif = simplifier(random.choice(list_fichier))
+
 
 
     while NombreDeChance > 0 and "_" in MotObtenu:
