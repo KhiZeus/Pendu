@@ -1,9 +1,10 @@
+import random
+
 """Le script qui suit permet de réaliser le jeu du pendu ;
     l'utilisateur du jeu joue contre l'ordinateur qui choisit un mot dans un fichier fourni
     Version: 1.1 :  structure simple de devinette d'une lettre dans un mot fixé
     Notes:  Le programme ne s'arrête pas en cas de victoire
     """
-import random
 
 """____________________________________________________
 
