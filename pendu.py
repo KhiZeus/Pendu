@@ -44,6 +44,37 @@ def deviner_mot(liste_lettre, mot):
 
     return mot_incomplet
 
+# fonction pour simplifier les text
+def simplifier(texte):
+    """Remplace les caractère spéciaux dans un texte par des caractères simples:
+  enlève les accents, la cédille, ....
+  Argument: Texte à simplifier
+  return le même text en simple
+  """
+
+    correspondance = {
+        "àáâãäå": "a",
+        "æ": "ae",
+        "èéêë": "e",
+        "ìíîï": "i",
+        "ñ": "n",
+        "òóôõöø": "o",
+        "œ": "oe",
+        "ùúûü": "u",
+        "ýÿ": "y",
+        "ç": "c"
+    }
+
+    texte_simple = ""
+    for caracter in texte:
+        for complexe_texte, simple in correspondance.items():
+            if caracter in complexe_texte:
+                texte_simple += simple
+                break
+        else:
+            texte_simple += caracter
+
+    return texte_simple
 
 """____________________________________________________
 
@@ -82,7 +113,7 @@ while changement_fichier == "o":
     while reprise == "o":
 
         # definition du mot a deviner
-        MotObjectif = random.choice(liste_mots)
+        MotObjectif = simplifier(random.choice(liste_mots))
 
         # Création du mot vide
         MotObtenu = ""
@@ -98,7 +129,7 @@ while changement_fichier == "o":
             print(f"\nLe mot à deviner est : ", MotObtenu, "encore ", NombreDeChance, " chances ; déja essayé",
                   lettre_essaies,
                   "\n ")
-            LettrePropose = input("Proposez une lettre: ")
+            LettrePropose = simplifier(input("Proposez une lettre: "))
             if LettrePropose not in lettre_essaies:
                 lettre_essaies.append(LettrePropose)
                 if LettrePropose in MotObjectif:
@@ -118,4 +149,7 @@ while changement_fichier == "o":
             print(f"VOUS ETES PENDU !! le mot à trouver étais :\t", MotObjectif)
 
         reprise = input("Voulez vous rejouer ? o = oui   n = non :")
-        changement_fichier = input("Voulez vous changer de fichier ? o = oui   n = non :")
+        if reprise == "o":
+            changement_fichier = input("Voulez vous changer de fichier ? o = oui   n = non :")
+        else:
+            changement_fichier = ("n")
